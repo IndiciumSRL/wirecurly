@@ -4,11 +4,12 @@ from dialplan.applications import *
 
 def main():
 	c = Context('default')
-	e = Extension('test')
-	c.addChild(e)
-	cond = Condition()
-	e.addChild(cond)
-	cond.addChild( Action( Answer() ) )
+	e = c.addExtension('test')
+	cond = e.addCondition()
+
+	cond.addAction( Answer() )
+	cond.addAction( Hangup() )
+
 	print c
 
 if __name__ == '__main__':

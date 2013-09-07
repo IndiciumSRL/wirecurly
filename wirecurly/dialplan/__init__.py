@@ -11,6 +11,11 @@ class Context(Element):
 	def __init__(self, name):
 		super(Context, self).__init__('context', name=name)
 
+	def addExtension(self, name, *args, **kwargs):
+		e = Extension(name, *args, **kwargs)
+		self.addChild(e)
+		return e
+
 
 class Extension(Element):
 	"""Represents a dialplan extension"""
@@ -19,6 +24,11 @@ class Extension(Element):
 		if _continue:
 			d['continue'] = _continue
 		super(Extension, self).__init__('extension', name=name, **d)
+
+	def addCondition(self, *args, **kwargs):
+		cond = Condition(*args, **kwargs)
+		self.addChild(cond)
+		return cond
 		
 class Condition(Element):
 	"""Represents a condition"""
@@ -34,6 +44,11 @@ class Condition(Element):
 				d['break'] = _break
 
 		super(Condition, self).__init__('condition', **d)
+
+	def addAction(self, application, negate=False):
+		action = Action(application, negate)
+		self.addChild( action )
+		return action
 		
 class Action(Element):
 	"""Represents an action"""
@@ -41,7 +56,10 @@ class Action(Element):
 		if not isinstance(application, ApplicationBase):
 			raise Exception('Application needs to inherit ApplicationBase')
 
-		d = {'application': application.application(), 'data': application.data()}
+		d = {'application': application.application()}
+		data = application.data()
+		if data is not None:
+			d['data'] = data
 		if negate:
 			super(Action, self).__init__('anti-action', **d)
 		else:
@@ -49,11 +67,18 @@ class Action(Element):
 		
 class ApplicationBase(object):
 	"""An abstract base for an application"""
+	name = None
+	mdata = None
 	def __init__(self):
 		super(ApplicationBase, self).__init__()
 	
 	def application(self):
-		raise NotImplementedError
+		if self.name is None:
+			raise NotImplementedError
+		return self.name
 		
 	def data(self):
-		return None
+		if hasattr(self.mdata, '__call__'):
+			return self.mdata()
+		else:
+			return self.mdata
