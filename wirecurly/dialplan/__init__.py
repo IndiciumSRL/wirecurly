@@ -1,84 +1,37 @@
 import logging
+from uuid import uuid4
 
-from base import Element
+from wirecurly.base import dialplan
 
 log = logging.getLogger(__name__)
 
-__all__ = ['Context', 'Extension', 'Condition', 'Action', 'ApplicationBase']
+class Dialplan(object):
+	"""High level dialplan object"""
+	def __init__(self, context):
+		super(Dialplan, self).__init__()
+		self.context = dialplan.Context(context)
 
-class Context(Element):
-	"""A dialplan context"""
-	def __init__(self, name):
-		super(Context, self).__init__('context', name=name)
-
-	def addExtension(self, name, *args, **kwargs):
-		e = Extension(name, *args, **kwargs)
-		self.addChild(e)
-		return e
-
-
-class Extension(Element):
-	"""Represents a dialplan extension"""
-	def __init__(self, name, _continue=False):
-		d = {}
-		if _continue:
-			d['continue'] = _continue
-		super(Extension, self).__init__('extension', name=name, **d)
+	def addExtension(self, name):
+		'''
+			Add a new extension to the current context
+		'''
+		exten = dialplan.Extension(name)
+		self.context.addChild(exten)
+		return self.context[-1]
 
 	def addCondition(self, *args, **kwargs):
-		cond = Condition(*args, **kwargs)
-		self.addChild(cond)
+		'''
+			Add a new condition with a new extension
+		'''
+		exten = dialplan.Extension(str(uuid4()))
+		cond = dialplan.Condition(*args, **kwargs)
+		exten.addChild(cond)
+		self.context.addChild(exten)
 		return cond
-		
-class Condition(Element):
-	"""Represents a condition"""
-	def __init__(self, field=None, expression=None, _break=None):
-		d = {}
-		if field is not None:
-			if expression is not None:
-				d = {'expression': expression, 'field': field}
-		if _break is not None:
-			if _break not in ('on-true', 'on-false', 'never'):
-				log.warning('Invalid break value (%s), ignoring.', _break)
-			else:
-				d['break'] = _break
 
-		super(Condition, self).__init__('condition', **d)
 
-	def addAction(self, application, negate=False):
-		action = Action(application, negate)
-		self.addChild( action )
-		return action
-		
-class Action(Element):
-	"""Represents an action"""
-	def __init__(self, application, negate=False):
-		if not isinstance(application, ApplicationBase):
-			raise Exception('Application needs to inherit ApplicationBase')
+	def serialize(self):
+		return self.context.serialize()
 
-		d = {'application': application.application()}
-		data = application.data()
-		if data is not None:
-			d['data'] = data
-		if negate:
-			super(Action, self).__init__('anti-action', **d)
-		else:
-			super(Action, self).__init__('action', **d)
-		
-class ApplicationBase(object):
-	"""An abstract base for an application"""
-	name = None
-	mdata = None
-	def __init__(self):
-		super(ApplicationBase, self).__init__()
-	
-	def application(self):
-		if self.name is None:
-			raise NotImplementedError
-		return self.name
-		
-	def data(self):
-		if hasattr(self.mdata, '__call__'):
-			return self.mdata()
-		else:
-			return self.mdata
+	def __repr__(self):
+		return self.context.__repr__()

@@ -1,4 +1,4 @@
-from dialplan import ApplicationBase
+from wirecurly.base.dialplan import ApplicationBase
 
 class Answer(ApplicationBase):
 	"""Execute the answer of a call"""
