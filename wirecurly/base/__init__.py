@@ -45,6 +45,12 @@ class Element(object):
 		'''
 		return etree.tostring(self.tree(), pretty_print=False)
 
+	def __getitem__(self, key):
+		return self.__children[key]
+
+	def __setitem__(self, key, value):
+		self.__children[key] = value
+
 	def __repr__(self):
 		'''
 			Pretty print our XML
