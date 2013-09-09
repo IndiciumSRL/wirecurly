@@ -67,14 +67,15 @@ class Domain(Element):
 class Directory(Document):
 	"""A root directory"""
 	def __init__(self, domain=None):
-		super(Directory, self).__init__(Section('directory'))
+		self.section = Section('directory')
+		super(Directory, self).__init__(self.section)
 		if domain is not None:
-			self[0] = Domain(domain)
+			self[0].addChild(Domain(domain))
 
 	def setDomain(self, domain):
 		''' Set the domain '''
 		domainObj = Domain(domain)
-		self[0] = domainObj
+		self[0].addChild(domainObj)
 		return domainObj
 
 	def getDomain(self):

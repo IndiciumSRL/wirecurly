@@ -58,8 +58,6 @@ class Directory(object):
 		super(Directory, self).__init__()
 		self.directory = directory.Directory()
 		self.domain = self.directory.setDomain(domain)
-		self.users = directory.Users()
-		self.domain.addChild(self.users)
 		self.gateways = []
 
 	def serialize(self):
@@ -67,12 +65,12 @@ class Directory(object):
 
 	def addGateway(self, name):
 		proxyGateway = Gateway(name)
-		self.users.addChild(proxyGateway.user)
+		self.domain.addChild(proxyGateway.user)
 		return proxyGateway
 
 	def addUser(self, name):
 		userProxy = User(name)
-		self.users.addChild(userProxy.user)
+		self.domain.addChild(userProxy.user)
 		return userProxy
 		
 	def __repr__(self):
