@@ -8,12 +8,13 @@ except ImportError:
 setup(
     name='wirecurly',
     version='0.1',
-    description='A simple XML generation tool to handle FreeSWITCH mod_xml_curl',
+    description='A simple XML generation tool to handle FreeSWITCH mod_xml_curl as well as file written XML',
     author='Joao Mesquita',
     author_email='jmesquita@indicium.com.ar',
-    url='',
+    url='https://github.com/Wirephone/wirecurly',
     install_requires=[
         "lxml",
+        "nose"
     ],
     packages=find_packages(),
     include_package_data=True,
