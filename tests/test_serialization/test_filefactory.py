@@ -15,7 +15,7 @@ class TestFileSerialization(unittest.TestCase):
 		'''
 			Fixture for the filename to be used and its data
 		'''
-		self.data = {'tag': 'parent', 'children': [{'tag': 'child1', 'attrs': {'attr2': 'str2'}, 'children': []}], 'attrs': {'attr': 'str'} }
+		self.data = {'tag': 'parent', 'children': [{'tag': 'child1', 'attrs': {'attr2': 'str2'}, 'children': [{'tag': 'child2', 'attrs': {'attr3': 'str3'}, 'children': []}]}], 'attrs': {'attr': 'str'} }
 		self.filename = '/tmp/test.xml'
 
 		self.fac = XMLFileFactory(self.data, self.filename)

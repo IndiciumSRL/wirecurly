@@ -10,19 +10,56 @@ class User(object):
 		super(User, self).__init__()
 		self.user_id = user_id
 		self.variables = []
-		self.parameters = [{'name': 'password', 'value': password}]
+		self.parameters = []
+		self.addParameter('password', password)
 
 	def addVariable(self, var, val):
 		'''
 			Set an extra variable for an user
 		'''
-		self.variables.append({'name': var, 'value': val})
+		try:
+			self.getVariable(var)
+		except ValueError:
+			self.variables.append({'name': var, 'value': val})
+			return
+
+		log.warning('Cannot replace existing variable.')
+		raise ValueError
+
 
 	def addParameter(self, param, val):
 		'''
 			Set an extra parameter for an user
 		'''
-		self.parameters.append({'name': param, 'value': val})
+		try:
+			self.getParameter(param)
+		except ValueError:
+			self.parameters.append({'name': param, 'value': val})
+			return
+		
+		log.warning('Cannot replace existing parameter.')
+		raise ValueError
+
+	def getParameter(self, param):
+		'''
+			Retrieve the value of a parameter by its name
+		'''
+		for p in self.parameters:
+			if p.get('name') == param:
+				return p.get('value')
+
+		raise ValueError
+
+	def getVariable(self, var):
+		'''
+			Retrieve the value of a variable by its name
+		'''
+		for v in self.variables:
+			if v.get('name') == var:
+				return v.get('value')
+
+		raise ValueError
+
 
 	def todict(self):
 		'''
