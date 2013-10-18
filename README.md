@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/jmesquita/wirecurly.png)](https://travis-ci.org/jmesquita/wirecurly)
+[![Build Status](https://travis-ci.org/Wirephone/wirecurly.png)](https://travis-ci.org/Wirephone/wirecurly)
 
 wirecurly
 =========
