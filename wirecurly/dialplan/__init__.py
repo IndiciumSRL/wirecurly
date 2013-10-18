@@ -30,8 +30,8 @@ class Extension(object):
 		'''
 			Returns value of destination_number condition
 		'''
-			return self.codition['expression']
-			raise ValueError
+		return self.codition['expression']
+		raise ValueError
 
 	def existAction(self,act,val):
 		'''
