@@ -10,6 +10,8 @@ except ImportError:
 	log.exception('lxml is needed for wirecurly to be used.')
 	sys.exit(1)
 
+__all__ = ['XMLFileFactory']
+
 log = logging.getLogger(__name__)
 
 class XMLFactory(object):
@@ -26,7 +28,7 @@ class XMLFactory(object):
 		if self.data.get('children'):
 			self._parseChildren(self.data.get('children'), self.root)
 
-		return etree.tostring(self.root, pretty_print=False)
+		return etree.tostring(self.root, pretty_print=True)
 
 	def _parseChildren(self, children, parent):
 		'''
