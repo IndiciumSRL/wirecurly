@@ -1,4 +1,6 @@
+[![Build Status](https://travis-ci.org/jmesquita/wirecurly.png)](https://travis-ci.org/jmesquita/wirecurly)
+
 wirecurly
 =========
 
-A simple XML generation library created to ease the use of mod_xml_curl in FreeSWITCH.
+A simple XML generation lib to be used with FreeSWITCH.
