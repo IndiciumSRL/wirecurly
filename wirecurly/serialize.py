@@ -35,7 +35,6 @@ class XMLFactory(object):
 			Parse children of the dict to create XML structure
 		'''
 		for child in children:
-			print child
 			el = etree.SubElement(parent, child.get('tag'), **child.get('attrs', {}))
 			if child.get('children'):
 				self._parseChildren(child.get('children'), el)
