@@ -14,9 +14,9 @@ class Conference(ApplicationBase):
 			Getter for data so we can properly manipulate application configuration
 		'''
 		if self.pin is None:
-			return '{}@{}'.format(self.conf_name, self.profile)
+			return '{0}@{1}'.format(self.conf_name, self.profile)
 		else:
-			return '{}@{}+{}'.format(self.conf_name, self.profile, self.pin)
+			return '{0}@{1}+{2}'.format(self.conf_name, self.profile, self.pin)
 
 	def setPin(self, pin):
 		'''
