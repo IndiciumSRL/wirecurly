@@ -1,4 +1,4 @@
-class ExceptionBase(object):
+class ExceptionBase(BaseException):
 	"""A base exception"""
 	pass
 

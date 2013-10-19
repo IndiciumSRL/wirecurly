@@ -1,4 +1,5 @@
 import logging
+from wirecurly.exc import *
 
 log = logging.getLogger(__name__)
 
