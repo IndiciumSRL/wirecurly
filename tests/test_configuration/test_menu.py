@@ -30,7 +30,7 @@ class testMenuCreation(unittest.TestCase):
 			Test if an attr is properly add to a menu
 		'''
 		self.menu.addAttr('digit-len','4') 
-		assert self.menu.get('digit-len') == '4'
+		assert self.menu.getAttr('digit-len') == '4'
 
 	@tools.raises(ValueError)
 	def test_adding_existing_attr(self):
@@ -45,7 +45,11 @@ class testMenuCreation(unittest.TestCase):
 			Test if an entry is properly add to a menu
 		'''
 		self.menu.addEntry('menu-exec-app','1','transfer 1001 XML default') 
-		assert self.menu.getEntry('menu-exec-app','1') == 'transfer 1001 XML default'
+		ent = self.menu.getEntry('1') 
+		if ent.get('action') == 'menu-exec-app' and ent.get('param') == 'transfer 1001 XML default':
+			assert True
+		else:
+			assert False
 
 	@tools.raises(ValueError)
 	def test_adding_existing_entry(self):
