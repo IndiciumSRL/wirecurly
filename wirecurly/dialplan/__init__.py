@@ -1,4 +1,5 @@
 import logging
+import condition
 
 log = logging.getLogger(__name__)
 
@@ -10,46 +11,51 @@ class Extension(object):
 	def __init__(self,extension):
 		super(Extension, self).__init__()
 		self.extension = extension
-		self.condition = {'field' : 'destination_number' , 'expression' : '^'+ extension +'$'}
-		self.actions = []
+		self.conditions = [] 
+		
 
-	def addAction(self,act,val):
+	def addCondition(self,cond):
 		'''
-			Set a new action for this extension
+			Add a condition for this extension
 		'''
 		try:
-			self.getAction(act,val)
-		except:
-			self.actions.append({'application' : act , 'data' : val})
+			self.getCondition(cond.value['field'],cond.value['expression'])
+		except ValueError:
+			self.conditions.append(cond)
 			return
 
-		log.warning('Cannot replace existing action.')
+		log.warning('Cannot replace existing condition')
 		raise ValueError
 
-	def getCondition(self):
+	def getCondition(self,field,exp):
 		'''
-			Returns value of destination_number condition
+			Returns a condition object
 		'''
-		return self.codition['expression']
-		raise ValueError
-
-	def existAction(self,act,val):
-		'''
-			Return true if an action and data exists 
-		'''
-		for a in self.actions:
-			if a.get('application') == 'act' and a.get('data') == 'val':
-				return True
-		return False
+		for c in conditions:
+			if c.attrs['field'] == field and c.attrs['expression'] == exp:
+				return c
+		raise ValueError 
 
 	def todict(self):
 		'''
 			Create a dict so it can be converted/serialized
 		'''
+		children = [] 
+		for c in self.conditions:
+			if len(children) == 0:
+				if c.actions:
+					children = [{'tag': 'condition', 'children': [
+									{'tag': 'action', 'attrs': a} for a in c.actions
+								] , 'attrs': c.attrs }]
+				else:
+					children = [{'tag': 'condition' , 'attrs': c.attrs }]
+			else:
+				if c.actions:
+					children.append = [{'tag': 'condition', 'children': [
+									{'tag': 'action', 'attrs': a} for a in c.actions
+								] , 'attrs': c.attrs }]
+				else:
+					children.append = [{'tag': 'condition' , 'attrs': c.attrs }]
+
+		return {'tag': 'extension', 'children': children, 'attrs': {'name': self.extension}}
 		
-		children =  {'tag' : 'condition','attrs': self.condition }
-
-		if self.actions:
-			children.append({'children': [ {tag : 'action' , attrs : a} for a in self.actions ]})
-
-		return {'tag' : 'extension','children' : children, 'attrs': {'name' : self.extension}}
