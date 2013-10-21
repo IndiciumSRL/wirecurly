@@ -3,7 +3,7 @@
 '''
 
 import unittest
-from wirecurly import dialplan
+from wirecurly import dialplan.condition
 from nose import tools
 
 class testConditionCreation(unittest.TestCase):
