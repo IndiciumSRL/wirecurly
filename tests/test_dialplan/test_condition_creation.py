@@ -39,6 +39,20 @@ class testConditionCreation(unittest.TestCase):
 		self.cond.addAction('answer','')
 		assert isinstance(self.cond.todict(), dict)
 
+	def test_condition_anti_action_dict_ok(self):
+		'''
+			Test that condition with an anti-action is properly serialized
+		'''
+		self.cond.addAntiAction('answer','')
+		assert isinstance(self.cond.todict(), dict)
+
+	def test_condition_action_anti_action_dict_ok(self):
+		'''
+			Test that condition with an action and an anti-action is properly serialized
+		'''
+		self.cond.addAction('answer','')
+		self.cond.addAntiAction('hangup','')
+		assert isinstance(self.cond.todict(), dict)
 
 	def test_adding_action(self):
 		'''
@@ -46,6 +60,13 @@ class testConditionCreation(unittest.TestCase):
 		'''
 		self.cond.addAction('answer','')
 		assert self.cond.existAction('answer','')
+
+	def test_adding_anti_action(self):
+		'''
+			Test if an anti-action is properly add to a condition
+		'''
+		self.cond.addAntiAction('hangup','')
+		assert self.cond.existAntiAction('hangup','')
 
 	def test_adding_application(self):
 		'''
