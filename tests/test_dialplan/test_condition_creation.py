@@ -29,9 +29,8 @@ class testConditionCreation(unittest.TestCase):
 			Test if an action is properly add to a condition
 		'''
 		self.cond.addAction('answer','')
-		c = self.cond.existAction('answer','')
-		assert c.actions['application'] == 'answer' and c.actions['data'] == ''
-
+		assert self.cond.existAction('answer','')
+		
 	@tools.raises(ValueError)
 	def test_adding_existing_action(self):
 		'''

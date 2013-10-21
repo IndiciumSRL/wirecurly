@@ -29,7 +29,12 @@ class testExtensionCreation(unittest.TestCase):
 			Test if an action is properly add to a condition
 		'''
 		self.ext.addCondition('destination_number','1000')
-		assert self.cond.getAction('destination_number','1000')
+		try:
+			a = self.ext.getCondition('destination_number','1000')
+		except ValueError:
+			assert False
+		assert True
+		
 
 	@tools.raises(ValueError)
 	def test_adding_existing_action(self):
