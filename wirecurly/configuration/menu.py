@@ -10,8 +10,9 @@ class Menu(object):
 	'''
 	def __init__(self,name):
 		super(Menu, self).__init__()
-		self.attrs = {'name' : name}
+		self.attributes = {'name': name}
 		self.entries = []
+		
 
 	def addAttr(self,attr,val):
 		'''
@@ -20,7 +21,7 @@ class Menu(object):
 		try:
 			self.getAttr(attr)
 		except ValueError:
-			self.attrs.update({attr : val})
+			self.attributes[attr] = val
 			return
 		log.warning('Cannot modify existing attribute')
 		raise ValueError
@@ -29,9 +30,8 @@ class Menu(object):
 		'''
 			Get attribute from menu by its name. If it doesnt exist then raise an exception
 		'''
-		val = self.attrs.get(attr)
+		val = self.attributes.get(attr)
 		if not val:
-			log.warning('Attribute %s is not set' % attr)
 			raise ValueError
 		else:
 			return val
@@ -57,16 +57,16 @@ class Menu(object):
 		for e in self.entries:
 			if e['digits'] == digits:
 				return e
-		log.warning('Entry for digit %s is not set' % digits)
 		raise ValueError
 	
 	def todict(self):
 		'''
 			Create a dict so it can be converted/serialized
 		'''
+	
 		children = []
 
 		if self.entries:
 			children.extend([{'tag': 'entry', 'attrs': a} for a in self.entries])
-			
-		return {'tag': 'menu', 'children': children, 'attrs': self.attrs }
+		
+		return {'tag': 'menu', 'children': children, 'attrs': self.attributes }
