@@ -33,14 +33,14 @@ class testExtensionCreation(unittest.TestCase):
 		self.ext.addCondition(self.c)
 		assert isinstance(self.ext.todict(), dict)
 
-	def test_adding_condition(self):
+	def test_adding_field_condition(self):
 		'''
 			Test if an action is properly add to a condition
 		'''
 
 		self.ext.addCondition(self.c)
 		try:
-			a = self.ext.getCondition(self.c.attrs['field'],self.c.attrs['expression'])
+			a = self.ext.getCondition(self.c)
 		except ValueError:
 			assert False
 		assert True

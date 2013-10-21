@@ -1,18 +1,24 @@
 import logging
 from wirecurly.exc import *
+from wirecurly.dialplan.expression import *
 
 log = logging.getLogger(__name__)
 
-__all__ = ['Condition','TimeCondition','AbsoluteCondition']
+__all__ = ['Condition']
 
 class Condition(object):
 	'''
-		Condition oject for dialplan
+		Condition oject for dialplan. expr must be a dictionary
 	'''
 
-	def __init__(self,cond,val):
+	def __init__(self,attr=None,val=None,cont=False,expr=None):
 		super(Condition, self).__init__()
-		self.attrs = {'field' : cond , 'expression' : val}
+		if not attr and not val:
+			if not expr:
+				expr = ExpressionAbs()
+		else:
+			expr = ExpressionField(attr,val)
+		self.attrs = expr.todict()
 		self.actions = []
 		self.antiactions = []
 
@@ -79,25 +85,3 @@ class Condition(object):
 			children.extend([{'tag': 'anti-action', 'attrs': a} for a in self.antiactions])
 			
 		return {'tag': 'condition', 'children': children, 'attrs': self.attrs }
-
-class TimeCondition(Condition):
-	'''
-		Time Condition oject for dialplan
-	'''
-
-	def __init__(self,wday,hour):
-		#super(TimeCondition, self).__init__()
-		self.attrs = {'wday' : wday , 'hour' : hour}
-		self.actions = []
-		self.antiactions = []
-
-class AbsoluteCondition(Condition):
-	'''
-		Absolute Condition oject for dialplan
-	'''
-
-	def __init__(self):
-		#super(AbsoluteCondition, self).__init__()
-		self.attrs = {}
-		self.actions = []
-		self.antiactions = []

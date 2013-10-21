@@ -12,60 +12,28 @@ class Extension(object):
 		super(Extension, self).__init__()
 		self.extension = extension
 		self.conditions = [] 
-		
-
+	
 	def addCondition(self,cond):
 		'''
 			Add a condition for this extension
 		'''
-		try:
-			self.getCondition(cond.attrs['field'],cond.attrs['expression'])
-		except ValueError:
+		try:	
+			self.getCondition(cond)
+		except ValueError: #Condition doesnt exist
 			self.conditions.append(cond)
 			return
-
 		log.warning('Cannot replace existing condition')
 		raise ValueError
 
-	def addAbsoluteCondition(self,cond):
+	def getCondition(self,cond):
 		'''
-			Add an absolute condition for this extension
-		'''
-		self.conditions.append(cond)
-
-	def addTimeCondition(self,cond):
-		'''
-			Add a time condition for this extension
-		'''
-		try:
-			self.getTimeCondition(cond.attrs['wday'],cond.attrs['hour'])
-		except ValueError:
-			self.conditions.append(cond)
-			return
-
-		log.warning('Cannot replace existing condition')
-		raise ValueError
-
-	def getCondition(self,field,exp):
-		'''
-			Returns a condition object
+			Returns a condition object based on its attributes
 		'''
 		for c in self.conditions:
-			if c.attrs['field'] == field and c.attrs['expression'] == exp:
-				return c
-		raise ValueError 
-
-	def getTimeCondition(self,week,hour):
-		'''
-			Returns a time condition object
-		'''
-		for c in self.conditions:
-			try:
-				if c.attrs['wday'] == week and c.attrs['hour'] == hour:
+			if type(c) == type(cond):
+				if c.attrs == cond.attrs:
 					return c
-			except KeyError:
-				pass
-		raise ValueError 
+		raise ValueError
 
 	def todict(self):
 		'''
