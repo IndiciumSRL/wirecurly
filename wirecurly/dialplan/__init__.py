@@ -19,7 +19,7 @@ class Extension(object):
 			Add a condition for this extension
 		'''
 		try:
-			self.getCondition(cond.value['field'],cond.value['expression'])
+			self.getCondition(cond.attrs['field'],cond.attrs['expression'])
 		except ValueError:
 			self.conditions.append(cond)
 			return
@@ -31,7 +31,7 @@ class Extension(object):
 		'''
 			Returns a condition object
 		'''
-		for c in conditions:
+		for c in self.conditions:
 			if c.attrs['field'] == field and c.attrs['expression'] == exp:
 				return c
 		raise ValueError 

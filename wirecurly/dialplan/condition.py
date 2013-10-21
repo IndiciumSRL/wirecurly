@@ -30,7 +30,7 @@ class Condition(object):
 				Return true if an action and data exists 
 			'''
 			for a in self.actions:
-				if a.get('application') == 'act' and a.get('data') == 'val':
+				if a.get('application') == act and a.get('data') == val:
 					return True
 			return False
 
@@ -40,7 +40,7 @@ class Condition(object):
 		'''
 		children = []
 
-		if actions:
-			children.append([[{'tag': 'action', 'attrs': a} for a in actions]])
+		if self.actions:
+			children.append([[{'tag': 'action', 'attrs': a} for a in self.actions]])
 		
 		return {'tag': 'condition', 'children': children, 'attrs': self.attrs }

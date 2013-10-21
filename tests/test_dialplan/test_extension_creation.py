@@ -17,6 +17,7 @@ class testExtensionCreation(unittest.TestCase):
 		'''
 
 		self.ext = dialplan.Extension('1000')
+		self.c = dialplan.condition.Condition('destination_number','1000')
 		
 	def test_extension_dict_ok(self):
 		'''
@@ -28,9 +29,10 @@ class testExtensionCreation(unittest.TestCase):
 		'''
 			Test if an action is properly add to a condition
 		'''
-		self.ext.addCondition('destination_number','1000')
+
+		self.ext.addCondition(self.c)
 		try:
-			a = self.ext.getCondition('destination_number','1000')
+			a = self.ext.getCondition(self.c.attrs['field'],self.c.attrs['expression'])
 		except ValueError:
 			assert False
 		assert True
@@ -41,5 +43,6 @@ class testExtensionCreation(unittest.TestCase):
 		'''
 			Test adding an existing action
 		'''
-		self.ext.addCondition('answer','')
-		self.ext.addCondition('answer','')
+
+		self.ext.addCondition(self.c)
+		self.ext.addCondition(self.c)
