@@ -16,7 +16,7 @@ class testConditionCreation(unittest.TestCase):
 			Condition fixtures for tests
 		'''
 
-		self.cond = dialplan.Condition('destination_number','1000')
+		self.cond = condition.Condition('destination_number','1000')
 		
 	def test_action_dict_ok(self):
 		'''
@@ -31,7 +31,7 @@ class testConditionCreation(unittest.TestCase):
 		self.cond.addAction('answer','')
 		c = self.cond.existAction('answer','')
 		assert c.actions['application'] == 'answer' and c.actions['data'] == ''
-		
+
 	@tools.raises(ValueError)
 	def test_adding_existing_action(self):
 		'''
