@@ -34,3 +34,13 @@ def existAction(self,act,val):
 				return True
 		return False
 
+def todict(self):
+	'''
+		Create a dict so it can be converted/serialized
+	'''
+	children = []
+
+	if actions:
+		children.append([[{'tag': 'action', 'attrs': a} for a in actions]])
+	
+	return {'tag': 'condition', 'children': children, 'attrs': self.attrs }

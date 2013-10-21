@@ -41,21 +41,10 @@ class Extension(object):
 			Create a dict so it can be converted/serialized
 		'''
 		children = [] 
-		for c in self.conditions:
-			if len(children) == 0:
-				if c.actions:
-					children = [{'tag': 'condition', 'children': [
-									{'tag': 'action', 'attrs': a} for a in c.actions
-								] , 'attrs': c.attrs }]
-				else:
-					children = [{'tag': 'condition' , 'attrs': c.attrs }]
-			else:
-				if c.actions:
-					children.append = [{'tag': 'condition', 'children': [
-									{'tag': 'action', 'attrs': a} for a in c.actions
-								] , 'attrs': c.attrs }]
-				else:
-					children.append = [{'tag': 'condition' , 'attrs': c.attrs }]
 
+		if self.conditions:
+			for c in self.conditions:
+				children.append(c.todict())
+	
 		return {'tag': 'extension', 'children': children, 'attrs': {'name': self.extension}}
 		
