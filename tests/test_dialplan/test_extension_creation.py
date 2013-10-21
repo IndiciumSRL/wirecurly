@@ -25,6 +25,14 @@ class testExtensionCreation(unittest.TestCase):
 		'''
 		assert isinstance(self.ext.todict(), dict)
 
+	def test_extension_condition_dict_ok(self):
+		'''
+			Test that extension with condition is properly serialized
+		'''
+
+		self.ext.addCondition(self.c)
+		assert isinstance(self.ext.todict(), dict)
+
 	def test_adding_condition(self):
 		'''
 			Test if an action is properly add to a condition

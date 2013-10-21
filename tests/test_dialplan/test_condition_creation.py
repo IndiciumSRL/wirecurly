@@ -18,11 +18,19 @@ class testConditionCreation(unittest.TestCase):
 
 		self.cond = condition.Condition('destination_number','1000')
 		
-	def test_action_dict_ok(self):
+	def test_condition_dict_ok(self):
 		'''
-			Test that action is properly serialized 
+			Test that condition is properly serialized 
 		'''
 		assert isinstance(self.cond.todict(), dict)
+
+	def test_condition_action_dict_ok(self):
+		'''
+			Test that condition with an action is properly serialized
+		'''
+		self.cond.addAction('answer','')
+		assert isinstance(self.cond.todict(), dict)
+
 
 	def test_adding_action(self):
 		'''
