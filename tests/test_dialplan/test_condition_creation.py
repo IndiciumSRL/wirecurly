@@ -16,7 +16,7 @@ class testConditionCreation(unittest.TestCase):
 			Condition fixtures for tests
 		'''
 
-		self.cond = Condition('destination_number','1000')
+		self.cond = condition.Condition('destination_number','1000')
 		
 	def test_action_dict_ok(self):
 		'''
