@@ -3,7 +3,7 @@ from wirecurly.exc import *
 
 log = logging.getLogger(__name__)
 
-__all__ = ['Condition']
+__all__ = ['Condition','TimeCondition','AbsoluteCondition']
 
 class Condition(object):
 	'''
@@ -79,3 +79,25 @@ class Condition(object):
 			children.extend([{'tag': 'anti-action', 'attrs': a} for a in self.antiactions])
 			
 		return {'tag': 'condition', 'children': children, 'attrs': self.attrs }
+
+class TimeCondition(Condition):
+	'''
+		Time Condition oject for dialplan
+	'''
+
+	def __init__(self,wday,hour):
+		#super(TimeCondition, self).__init__()
+		self.attrs = {'wday' : wday , 'hour' : hour}
+		self.actions = []
+		self.antiactions = []
+
+class AbsoluteCondition(Condition):
+	'''
+		Absolute Condition oject for dialplan
+	'''
+
+	def __init__(self):
+		#super(AbsoluteCondition, self).__init__()
+		self.attrs = {}
+		self.actions = []
+		self.antiactions = []
