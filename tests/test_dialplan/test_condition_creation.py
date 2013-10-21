@@ -3,7 +3,7 @@
 '''
 
 import unittest
-from wirecurly import dialplan.condition
+from wirecurly.dialplan import condition
 from nose import tools
 
 class testConditionCreation(unittest.TestCase):
@@ -16,7 +16,7 @@ class testConditionCreation(unittest.TestCase):
 			Condition fixtures for tests
 		'''
 
-		self.cond = condition.Condition('destination_number','1000')
+		self.cond = Condition('destination_number','1000')
 		
 	def test_action_dict_ok(self):
 		'''
