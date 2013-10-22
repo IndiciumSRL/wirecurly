@@ -41,6 +41,6 @@ class Condition(object):
 		children = []
 
 		if self.actions:
-			children.append([[{'tag': 'action', 'attrs': a} for a in self.actions]])
-		
+			children.extend([{'tag': 'action', 'attrs': a} for a in self.actions])
+			
 		return {'tag': 'condition', 'children': children, 'attrs': self.attrs }

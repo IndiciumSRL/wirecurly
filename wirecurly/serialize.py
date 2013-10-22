@@ -47,7 +47,13 @@ class XMLFactory(object):
 
 class XMLFileFactory(XMLFactory):
 	"""Object that will serialize XML to a specific file."""
-	def __init__(self, data, filepath):
+	def __init__(self, data, filepath, include=False):
+		'''
+			If the include parameter is True, then an <include/> tag will be the parent node of the
+			structure to serialize.
+		'''
+		if include:
+			data = {'tag': 'include', 'children': [data]}
 		super(XMLFileFactory, self).__init__(data)
 		self.filepath = filepath
 
