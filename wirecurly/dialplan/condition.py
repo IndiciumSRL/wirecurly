@@ -25,6 +25,16 @@ class Condition(object):
 				raise ValueError
 			return
 
+	def addApplication(self, app):
+		'''
+			Add an application.
+			An application must have 2 attributes. app_name and data.
+		'''
+		if not hasattr(app, 'app_name') or not hasattr(app, 'data'):
+			raise NoSuchApplication
+		else:
+			self.addAction(app.app_name, app.data)
+
 	def existAction(self,act,val):
 			'''
 				Return true if an action and data exists 

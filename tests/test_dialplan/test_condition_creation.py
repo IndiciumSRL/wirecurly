@@ -6,6 +6,14 @@ import unittest
 from wirecurly.dialplan import condition
 from nose import tools
 
+class AppMock(object):
+	"""An application interface mockup"""
+	def __init__(self):
+		super(AppMock, self).__init__()
+		self.app_name = 'test'
+		self.data = ''
+
+
 class testConditionCreation(unittest.TestCase):
 	'''
 		Test condition creation
@@ -38,6 +46,13 @@ class testConditionCreation(unittest.TestCase):
 		'''
 		self.cond.addAction('answer','')
 		assert self.cond.existAction('answer','')
+
+	def test_adding_application(self):
+		'''
+			Test adding an application to a Condition
+		'''
+		self.cond.addApplication(AppMock())
+		assert self.cond.existAction('test', '')
 		
 	@tools.raises(ValueError)
 	def test_adding_existing_action(self):
