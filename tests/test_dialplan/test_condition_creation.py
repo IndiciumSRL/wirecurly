@@ -75,7 +75,6 @@ class testConditionCreation(unittest.TestCase):
 		self.cond.addApplication(AppMock())
 		assert self.cond.existAction('test', '')
 		
-	@tools.raises(ValueError)
 	def test_adding_existing_action(self):
 		'''
 			Test adding an existing action
