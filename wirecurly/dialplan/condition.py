@@ -26,22 +26,18 @@ class Condition(object):
 			'''
 				Set a new action for this condition
 			'''
-			if not self.existAction(act,val):
-				self.actions.append({'application' : act , 'data' : val})	
-			else:
-				log.warning('Cannot replace existing action. app %s data %s' % (act,val))
-				raise ValueError
-			return
+			if self.existAction(act,val):	
+				log.warning('Replacing existing action!')
+			self.actions.append({'application' : act , 'data' : val})
 
 	def addAntiAction(self,act,val):
 			'''
 				Set a new anti-action for this condition
 			'''
-			if not self.existAntiAction(act,val):
-				self.antiactions.append({'application' : act , 'data' : val})	
-			else:
-				log.warning('Cannot replace existing anti-action. app %s data %s' % (act,val))
-				raise ValueError
+			if self.existAntiAction(act,val):
+				log.warning('Replacing existing anti-action!')
+
+			self.antiactions.append({'application' : act , 'data' : val})
 			return
 
 	def addApplication(self, app):
