@@ -13,8 +13,7 @@ setup(
     author_email='jmesquita@indicium.com.ar',
     url='https://github.com/Wirephone/wirecurly',
     install_requires=[
-        "lxml",
-        "nose"
+        "lxml"
     ],
     packages=find_packages(),
     include_package_data=True,
