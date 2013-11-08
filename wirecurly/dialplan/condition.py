@@ -4,7 +4,7 @@ from wirecurly.dialplan.expression import *
 
 log = logging.getLogger(__name__)
 
-__all__ = ['Condition']
+__all__ = ['Condition','or_']
 
 class Condition(object):
 	'''
@@ -29,7 +29,7 @@ class Condition(object):
 			if not self.existAction(act,val):
 				self.actions.append({'application' : act , 'data' : val})	
 			else:
-				log.warning('Cannot replace existing action.')
+				log.warning('Cannot replace existing action. app %s data %s' % (act,val))
 				raise ValueError
 			return
 
@@ -40,7 +40,7 @@ class Condition(object):
 			if not self.existAntiAction(act,val):
 				self.antiactions.append({'application' : act , 'data' : val})	
 			else:
-				log.warning('Cannot replace existing anti-action.')
+				log.warning('Cannot replace existing anti-action. app %s data %s' % (act,val))
 				raise ValueError
 			return
 
@@ -85,3 +85,30 @@ class Condition(object):
 			children.extend([{'tag': 'anti-action', 'attrs': a} for a in self.antiactions])
 			
 		return {'tag': 'condition', 'children': children, 'attrs': self.attrs }
+
+class or_(object):
+	'''
+		Class to add conditions to an extensions to be evaluated with logical OR. 
+		Can receive conditions or a list of conditions as parameters
+	'''
+
+	def __init__(self,*args):
+		super(or_, self).__init__()
+		self.conditions = []
+		if type(args[0]) == list:
+			for i in args[0]:
+				self.conditions.append(i) 
+		else:
+			for i in args:
+				self.conditions.append(i)
+
+
+	def todict(self):
+		'''
+			Create a dict for dialplan to evaluate condition with logical or
+		'''
+		for i,cond in enumerate(self.conditions):
+			if i < len(self.conditions)-1 and cond.attrs:
+				self.conditions[i].attrs.update({'break':'never'})
+		return self.conditions
+

@@ -17,9 +17,14 @@ class Extension(object):
 		'''
 			Add a condition for this extension
 		'''
-		try:	
-			self.getCondition(cond)
-		except ValueError: #Condition doesnt exist
+
+		if type(cond.todict()) != list:
+			try:	
+				self.getCondition(cond)
+			except ValueError: #Condition doesnt exist
+				self.conditions.append(cond)
+				return
+		else:
 			self.conditions.append(cond)
 			return
 		log.warning('Cannot replace existing condition')
@@ -43,7 +48,11 @@ class Extension(object):
 
 		if self.conditions:
 			for c in self.conditions:
-				children.append(c.todict())
-	
+				if type(c.todict()) == dict: #Condition could be a dict (Class condition) ...
+					children.append(c.todict())
+				elif type(c.todict()) == list: # or a list of conditions (Classes or_ , and_) .
+					for cond in c.todict():
+						children.append(cond.todict())
+
 		return {'tag': 'extension', 'children': children, 'attrs': {'name': self.extension}}
 		

@@ -41,37 +41,12 @@ class ExpressionTime(ExpressionBase):
 		super(ExpressionTime,self).__init__()
 		self.wday = wday
 		self.hour = hour
-
-	def getWday(self):
-		'''
-			Return wday
-		'''
-		return self.wday
 		
-	def getHour(self):
-		'''
-			Return hour 
-		'''
-		return self.hour
-
-	def setWday(self,wday):
-		'''
-			Set wday value
-		'''
-		self.wday = wday
-
-
-	def setHour(self,wday):
-		'''
-			Set hour value
-		'''
-		self.hour = hour
-
 	def todict(self):
 		'''
 			Return a dict with wday and hour
 		'''
-		return {'wday' : self.wday , 'hour' : self.hour}
+		return {'wday' : self.wday , 'hour' : self.hour }
 
 class ExpressionField(ExpressionBase):
 	'''
@@ -83,30 +58,6 @@ class ExpressionField(ExpressionBase):
 		self.field = field
 		self.exp = exp
 
-	def getField(self):
-		'''
-			Return field value
-		'''
-		return self.field
-		
-	def getExp(self):
-		'''
-			Return expression value 
-		'''
-		return self.exp
-
-	def setField(self,field):
-		'''
-			Set field value
-		'''
-		self.field = field
-
-
-	def setExp(self,exp):
-		'''
-			Set expression value
-		'''
-		self.hour = hour
 
 	def todict(self):
 		'''
