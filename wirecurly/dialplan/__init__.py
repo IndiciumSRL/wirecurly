@@ -24,11 +24,20 @@ class Extension(object):
 			except ValueError: #Condition doesnt exist
 				self.conditions.append(cond)
 				return
-		else:
-			self.conditions.append(cond)
-			return
-		log.warning('Cannot replace existing condition')
-		raise ValueError
+			log.warning('Cannot replace existing condition')
+			raise ValueError
+		else: # We have to check all conditions in list
+			for c in cond.todict():
+				try:
+					self.getCondition(c)
+				except ValueError:
+					self.conditions.append(c)
+				else:
+					log.warning('Cannot replace existing condition')
+					raise ValueError
+					return
+
+		
 
 	def getCondition(self,cond):
 		'''
@@ -47,12 +56,22 @@ class Extension(object):
 		children = [] 
 
 		if self.conditions:
+
+
 			for c in self.conditions:
 				if type(c.todict()) == dict: #Condition could be a dict (Class condition) ...
 					children.append(c.todict())
 				elif type(c.todict()) == list: # or a list of conditions (Classes or_ , and_) .
 					for cond in c.todict():
 						children.append(cond.todict())
+		# for c in self.conditions:
+		# 		if type(c.todict()) == dict: #Condition could be a dict (Class condition) ...
+		# 			children.append(c.todict())
+		# 		elif type(c.todict()) == list: # or a list of conditions (Classes or_ , and_) .
+		# 			for cond in c.todict():
+		# 				children.append(cond.todict())
+
+
 
 		return {'tag': 'extension', 'children': children, 'attrs': {'name': self.extension}}
 		
