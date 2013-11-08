@@ -4,6 +4,7 @@
 
 import unittest
 from wirecurly.dialplan import condition
+from wirecurly.dialplan.expression import *
 from nose import tools
 
 class AppMock(object):
@@ -83,3 +84,23 @@ class testConditionCreation(unittest.TestCase):
 		self.cond.addAction('answer','')
 		self.cond.addAction('answer','')
 
+class testOrConditionCreation(unittest.TestCase):
+	'''
+		Test conditions creation with logical or
+	'''
+
+	def setUp(self):
+		'''
+			Or Condition fixtures for tests
+		'''
+		self.cond1 = condition.Condition(expr=ExpressionTime('mon-fri','9-18'))
+		self.cond2 = condition.Condition(expr=ExpressionTime('sat','9-13'))
+		self.orcond = condition.or_(self.cond1,self.cond2)
+		
+	def test_condition_list_ok(self):
+		'''
+			Test that condition is properly serialized 
+		'''
+		assert isinstance(self.orcond.todict(), list)
+
+	
