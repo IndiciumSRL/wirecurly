@@ -15,7 +15,7 @@ class FileString(object):
 	def __init__(self,*argv):
 		super(FileString, self).__init__()
 		self.audios = []
-		self.path = 'usr/share/freeswitch/sounds/en/us/callie/'
+		self.path = ''
 		for i in argv:
 			self.addAudio(i)
 
