@@ -6,12 +6,13 @@ __all__ = ['User']
 		
 class User(object):
 	"""A user object for the directory"""
-	def __init__(self, user_id, password):
+	def __init__(self, user_id, password=None):
 		super(User, self).__init__()
 		self.user_id = user_id
 		self.variables = []
 		self.parameters = []
-		self.addParameter('password', password)
+		if password:
+			self.addParameter('password', password)
 
 	def addVariable(self, var, val):
 		'''
