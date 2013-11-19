@@ -66,7 +66,7 @@ class User(object):
 		'''
 			Create a dict so it can be converted/serialized
 		'''
-		children = [{'tag': 'parameters', 'children': [
+		children = [{'tag': 'params', 'children': [
 						{'tag': 'param', 'attrs': p} for p in self.parameters
 					]}]
 		if self.variables:
