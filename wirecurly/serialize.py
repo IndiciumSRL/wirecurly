@@ -46,11 +46,15 @@ class XMLFactory(object):
 		raise NotImplementedError
 
 class XMLFileFactory(XMLFactory):
-	"""Object that will serialize XML to a specific file."""
 	def __init__(self, data, filepath, include=False):
-		'''
-			If the include parameter is True, then an <include/> tag will be the parent node of the
-			structure to serialize.
+		'''Object that will serialize XML to a specific file.
+
+		:param data: The object to serialize.
+		:type name: object.
+		:param filepath: The absolute file path and name to serialize to.
+		:type state: str.
+		:param include: If the include parameter is True, then an <include/> tag will be the parent node of the structure to serialize.
+		:type state: bool.
 		'''
 		if include:
 			data = {'tag': 'include', 'children': [data]}
@@ -58,8 +62,9 @@ class XMLFileFactory(XMLFactory):
 		self.filepath = filepath
 
 	def convert(self):
-		'''
-			Generate XML and save it to filepath
+		'''Generate XML and save it to filepath
+
+		:raises: OSError
 		'''
 		with open(self.filepath, 'w') as f:
 			f.write(self.getXML())
