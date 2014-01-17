@@ -16,12 +16,15 @@ class Gateway(object):
 		'''
 			Set an extra parameter for a gateway
 		'''
-		try:
-			self.getParameter(param)
-		except ValueError:
+		if param != 'rtp-ip':
+			try:
+				self.getParameter(param)
+			except ValueError:
+				self.parameters.append({'name': param, 'value': val})
+				return
+		else:
 			self.parameters.append({'name': param, 'value': val})
-			return
-		
+                        return
 		log.warning('Cannot replace existing parameter.')
 		raise ValueError
 
