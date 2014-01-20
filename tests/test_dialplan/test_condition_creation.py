@@ -5,7 +5,6 @@
 import unittest
 from wirecurly.dialplan import condition
 from wirecurly.dialplan.expression import *
-from nose import tools
 
 class AppMock(object):
 	"""An application interface mockup"""

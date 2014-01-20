@@ -4,7 +4,7 @@
 
 import unittest
 from wirecurly.configuration import gateway
-from nose import tools
+import pytest
 
 
 class testGatewayCreation(unittest.TestCase):
@@ -34,12 +34,12 @@ class testGatewayCreation(unittest.TestCase):
 		self.gw.addParameter('username','someuser') 
 		assert self.gw.getParameter('username') == 'someuser'
 
-	@tools.raises(ValueError)
 	def test_adding_existing_param(self):
 		'''
 			Test adding an existing param
 		'''
-		self.gw.addParameter('username','someuser')
-		self.gw.addParameter('username','someuser')
+		with pytest.raises(ValueError):
+			self.gw.addParameter('username','someuser')
+			self.gw.addParameter('username','someuser')
 
 		

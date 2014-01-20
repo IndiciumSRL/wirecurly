@@ -2,9 +2,9 @@
 	Test extension creation for dialplan
 '''
 
+import pytest
 import unittest
 from wirecurly import dialplan
-from nose import tools
 
 class testExtensionCreation(unittest.TestCase):
 	'''
@@ -46,11 +46,10 @@ class testExtensionCreation(unittest.TestCase):
 		assert True
 		
 
-	@tools.raises(ValueError)
 	def test_adding_existing_action(self):
 		'''
 			Test adding an existing action
 		'''
-
-		self.ext.addCondition(self.c)
-		self.ext.addCondition(self.c)
+		with pytest.raises(ValueError):
+			self.ext.addCondition(self.c)
+			self.ext.addCondition(self.c)

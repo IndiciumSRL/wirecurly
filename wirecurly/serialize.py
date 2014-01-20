@@ -10,7 +10,7 @@ except ImportError:
 	log.exception('lxml is needed for wirecurly to be used.')
 	sys.exit(1)
 
-__all__ = ['XMLFileFactory']
+__all__ = ['XMLFileFactory', 'XMLFileFactory', 'XMLCurlFactory']
 
 log = logging.getLogger(__name__)
 
@@ -69,3 +69,35 @@ class XMLFileFactory(XMLFactory):
 		with open(self.filepath, 'w') as f:
 			f.write(self.getXML())
 		
+
+class XMLCurlFactory(XMLFactory):
+	'''Object that will serialize XML to mod_xml_curl
+
+	:param data: The object to serialize.
+	:type data: object
+	:param section: The section to serialize.
+	:type section: string
+	'''
+	def __init__(self, data=None, section=None):
+		super(XMLCurlFactory, self).__init__(data)
+		self.section = section
+
+	def convert(self):
+		'''Generate XML and serialize as per mod_xml_curl specification
+
+		:rtype: a unicode string with a serialize XML
+		'''
+		if self.data is None:
+			return self.not_found()
+		self.getXML()
+		document = etree.Element('document', type='freeswitch/xml')
+		element = etree.SubElement(document, 'section', name=self.section)
+		element.append(self.root)
+		return etree.tostring(document, pretty_print=True, encoding='utf-8', xml_declaration=True)
+
+	def not_found(self):
+		'''Returns a not found XML as per mod_xml_curl specification'''
+		root = etree.Element('document', type='freeswitch/xml')
+		section = etree.SubElement(root, 'section', name='result')
+		etree.SubElement(section, 'result', status='not found')
+		return etree.tostring(root, pretty_print=True, encoding='utf-8', xml_declaration=True)

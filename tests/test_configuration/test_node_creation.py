@@ -4,7 +4,6 @@
 
 import unittest
 from wirecurly.configuration import node
-from nose import tools
 
 
 class testNodeCreation(unittest.TestCase):

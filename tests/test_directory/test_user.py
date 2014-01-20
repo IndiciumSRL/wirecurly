@@ -3,8 +3,8 @@
 '''
 
 import unittest
+import pytest
 from wirecurly import directory
-from nose import tools
 
 class testUserCreation(unittest.TestCase):
 	"""Test user creation"""
@@ -34,17 +34,17 @@ class testUserCreation(unittest.TestCase):
 		self.user.addVariable('toll-allow', 'intl')
 		assert self.user.getVariable('toll-allow') == 'intl'
 
-	@tools.raises(ValueError)
 	def test_adding_existing_variable(self):
 		'''
 			Test trying to replace an existing variable
 		'''
-		self.user.addVariable('test', 'intl')
-		self.user.addVariable('test', 'intl')
+		with pytest.raises(ValueError):
+			self.user.addVariable('test', 'intl')
+			self.user.addVariable('test', 'intl')
 
-	@tools.raises(ValueError)
 	def test_adding_existing_parameter(self):
 		'''
 			Test trying to replace an existing parameter
 		'''
-		self.user.addParameter('password', 'anything')
+		with pytest.raises(ValueError):
+			self.user.addParameter('password', 'anything')
