@@ -56,4 +56,4 @@ class Gateway(object):
                                                         [{'tag': 'gateway', 'attrs': {'name': self.name}, 'children': [
                                                             {'tag': 'params', 'children': children }
                                                         ]}]
-                                                    }]}
+                                                    }, {'tag': 'params'}]}

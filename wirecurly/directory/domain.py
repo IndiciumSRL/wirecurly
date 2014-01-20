@@ -9,14 +9,17 @@ class Domain(object):
     def __init__(self, name):
         super(Domain, self).__init__()
         self.domain = name
-        self.variables = []
-        self.parameters = []
         self.users = []
+        self.parameters = None
+        self.variables = None
 
     def addVariable(self, var, val):
         '''
             Set an extra variable for a domain
         '''
+        if not self.variables:
+            self.variables = []
+
         try:
             self.getVariable(var)
         except ValueError:
@@ -35,10 +38,20 @@ class Domain(object):
         '''
         self.users.append(user)
 
+    def addGateway(self, gateway):
+        '''Add a gateway to domain
+        
+        :param gateway: The gateway to add to the domain.
+        :type gateway: object
+        '''
+        self.users.append(gateway)
+
     def addParameter(self, param, val):
         '''
             Set an extra parameter for a domain
         '''
+        if not self.parameters:
+            self.parameters = []
         try:
             self.getParameter(param)
         except ValueError:
@@ -52,9 +65,10 @@ class Domain(object):
         '''
             Retrieve the value of a parameter by its name
         '''
-        for p in self.parameters:
-            if p.get('name') == param:
-                return p.get('value')
+        if self.parameters:
+            for p in self.parameters:
+                if p.get('name') == param:
+                    return p.get('value')
 
         raise ValueError
 
@@ -62,9 +76,10 @@ class Domain(object):
         '''
             Retrieve the value of a variable by its name
         '''
-        for v in self.variables:
-            if v.get('name') == var:
-                return v.get('value')
+        if self.variables:
+            for v in self.variables:
+                if v.get('name') == var:
+                    return v.get('value')
 
         raise ValueError
 
@@ -73,12 +88,16 @@ class Domain(object):
         '''
             Create a dict so it can be converted/serialized
         '''
-        children = [{'tag': 'params', 'children': [
-                        {'tag': 'param', 'attrs': p} for p in self.parameters
-                    ]}]
-        children.append({'tag': 'variables', 'children': [
-                        {'tag': 'variable', 'attrs': v} for v in self.variables
-                    ]})
+        children = []
+        if self.parameters:
+            children.append({'tag': 'params', 'children': [
+                            {'tag': 'param', 'attrs': p} for p in self.parameters
+                        ]})
+
+        if self.variables:
+            children.append({'tag': 'variables', 'children': [
+                            {'tag': 'variable', 'attrs': v} for v in self.variables
+                        ]})
         children.append({'tag': 'users', 'children': [
                         u.todict() for u in self.users
                     ]})
