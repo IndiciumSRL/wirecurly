@@ -38,7 +38,7 @@ class User(object):
             self.parameters.append({'name': param, 'value': val})
             return
         
-        log.warning('Cannot replace existing parameter.')
+        log.warning('Cannot replace existing parameter. (%s) %s for %s', param, self.getParameter(param), val)
         raise ValueError
 
     def getParameter(self, param):
