@@ -5,4 +5,5 @@ python:
 install:
   - "pip install lxml"
   - "pip install pytest"
+  - "python setup.py develop"
 script: py.test
