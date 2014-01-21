@@ -14,17 +14,45 @@ __all__ = ['XMLFileFactory', 'XMLFileFactory', 'XMLCurlFactory']
 
 log = logging.getLogger(__name__)
 
+
 class XMLFactory(object):
-	"""Base factory for XML generation"""
+	"""Base factory for XML generation
+
+	:param data: A dict with the specified format for XML generation
+	:type data: dict
+	"""
 	def __init__(self, data):
 		super(XMLFactory, self).__init__()
 		self.data = data
 		
+	
+	def _typecastAttributes(self, d):
+		''' Typecast attributes to string or unicode
+
+		:param d: the attributes dictionary
+		:type d: dict
+
+		:rtype: dict -- The new dict with only strings and unicodes
+		'''
+		for key in d:
+			val = d[key]
+			if type(val) == bool:
+				if val == True:
+					d[key] = 'true'
+				else:
+					d[key] = 'false'
+			elif type(val) == int:
+				d[key] = str(val)
+			elif type(val) == float:
+				d[key] = str(val)
+		return d
+
 	def getXML(self):
+		'''Get the XML based on the data provided.
+
+		:rtype: str - A string generated XML for `data`
 		'''
-			Get the XML based on the data provided.
-		'''
-		self.root = etree.Element(self.data.get('tag'), **self.data.get('attrs', {}))
+		self.root = etree.Element(self.data.get('tag'), **self._typecastAttributes(self.data.get('attrs', {})))
 		if self.data.get('children'):
 			self._parseChildren(self.data.get('children'), self.root)
 
@@ -35,7 +63,7 @@ class XMLFactory(object):
 			Parse children of the dict to create XML structure
 		'''
 		for child in children:
-			el = etree.SubElement(parent, child.get('tag'), **child.get('attrs', {}))
+			el = etree.SubElement(parent, child.get('tag'), **self._typecastAttributes(child.get('attrs', {})))
 			if child.get('children'):
 				self._parseChildren(child.get('children'), el)
 

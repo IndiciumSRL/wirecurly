@@ -2,10 +2,10 @@
     Creates all tests to serialize XMLs to xml_curl
 '''
 import logging
-import StringIO
 import pytest
 from lxml import etree
 
+from utils import xml2d
 from wirecurly import XMLCurlFactory
    
 def test_not_found():
@@ -40,7 +40,11 @@ def test_not_found():
     assert(result[0].attrib["status"] == "not found", "Result status must be 'not found'")
 
 @pytest.mark.parametrize("data,section,expected", [
-    ({'tag': 'domain', 'children': [{'tag': 'params', 'children': []}, {'tag': 'variables', 'children': []}, {'tag': 'users', 'children': []}], 'attrs': {'name': 'wirephone.com.ar'}}, 'directory', '<document type="freeswitch/xml"><section name="directory"><domain name="wirephone.com.ar"><users></users><params></params><variables></variables></domain></section></document>')
+    (
+        {'tag': 'domain', 'children': [{'tag': 'params', 'children': []}, {'tag': 'variables', 'children': []}, {'tag': 'users', 'children': []}], 'attrs': {'name': 'wirephone.com.ar'}},
+        'directory',
+        '<document type="freeswitch/xml"><section name="directory"><domain name="wirephone.com.ar"><users></users><params></params><variables></variables></domain></section></document>'
+    )
 ])
 def test_curl_serialization(data, section, expected):
     '''
@@ -58,8 +62,4 @@ def test_curl_serialization(data, section, expected):
         return element.tag, \
             dict(map(recursive_dict, element)) or element.text
 
-    d = recursive_dict(root)
-    d2 = recursive_dict(expected_root)
-    diff = set(d[1].keys()) - set(d2[1].keys())
-    assert d[0] == d2[0]
-    assert not diff
+    assert xml2d(root) == xml2d(expected_root)
