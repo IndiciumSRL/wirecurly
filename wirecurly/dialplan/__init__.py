@@ -64,12 +64,6 @@ class Extension(object):
 				elif type(c.todict()) == list: # or a list of conditions (Classes or_ , and_) .
 					for cond in c.todict():
 						children.append(cond.todict())
-		# for c in self.conditions:
-		# 		if type(c.todict()) == dict: #Condition could be a dict (Class condition) ...
-		# 			children.append(c.todict())
-		# 		elif type(c.todict()) == list: # or a list of conditions (Classes or_ , and_) .
-		# 			for cond in c.todict():
-		# 				children.append(cond.todict())
 
 
 
