@@ -45,6 +45,8 @@ class XMLFactory(object):
 				d[key] = str(val)
 			elif type(val) == float:
 				d[key] = str(val)
+			elif val is None:
+				d[key] = u''
 		return d
 
 	def getXML(self):

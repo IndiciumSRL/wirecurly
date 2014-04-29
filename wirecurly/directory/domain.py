@@ -98,7 +98,8 @@ class Domain(object):
             children.append({'tag': 'variables', 'children': [
                             {'tag': 'variable', 'attrs': v} for v in self.variables
                         ]})
-        children.append({'tag': 'users', 'children': [
-                        u.todict() for u in self.users
-                    ]})
+
+        if self.users:
+            children.extend([u.todict() for u in self.users])
+
         return {'tag': 'domain', 'children': children, 'attrs': {'name': self.domain}}
