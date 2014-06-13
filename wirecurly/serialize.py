@@ -87,7 +87,10 @@ class XMLFileFactory(XMLFactory):
 	'''
 	def __init__(self, data, filepath, include=False):
 		if include:
-			data = {'tag': 'include', 'children': [data]}
+			if type(data) is list:
+				data = {'tag': 'include', 'children': data}
+			else:
+				data = {'tag': 'include', 'children': [data]}
 		super(XMLFileFactory, self).__init__(data)
 		self.filepath = filepath
 
