@@ -24,3 +24,18 @@ class Sleep(ApplicationBase):
 			Sleep only needs to return the time to sleep in ms.
 		'''
 		return self.time_in_ms
+
+class Set(ApplicationBase):
+	"""Set a variable on the current executing channel"""
+	def __init__(self, variable, value):
+		super(Set, self).__init__('set')
+		self.variable = variable
+		self.value = value
+
+	@property
+	def data(self):
+		'''
+			Set needs return a string
+		'''
+		return '%s=%s' % (self.variable, self.value)
+		
