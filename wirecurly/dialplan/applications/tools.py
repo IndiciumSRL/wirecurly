@@ -39,3 +39,20 @@ class Set(ApplicationBase):
 		'''
 		return '%s=%s' % (self.variable, self.value)
 		
+class Export(ApplicationBase):
+	"""Export a variable on the other b leg"""
+	def __init__(self, variable, value, nolocal=False):
+		super(Export, self).__init__('export')
+		self.variable = variable
+		self.value = value
+		self.nolocal = nolocal
+
+	@property
+	def data(self):
+		'''
+			Set needs return a string
+		'''
+		if self.nolocal:
+			return 'nolocal:%s=%s' % (self.variable, self.value)
+		else:
+			return '%s=%s' % (self.variable, self.value)
