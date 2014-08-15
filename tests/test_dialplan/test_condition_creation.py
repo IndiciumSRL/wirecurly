@@ -61,6 +61,13 @@ class testConditionCreation(unittest.TestCase):
 		self.cond.addAction('answer','')
 		assert self.cond.existAction('answer','')
 
+	def test_adding_action_inline(self):
+		'''
+			Test if an action with inline=True is properly add to a condition
+		'''
+		self.cond.addAction('answer','', True)
+		assert self.cond.existAction('answer','', True)
+
 	def test_adding_anti_action(self):
 		'''
 			Test if an anti-action is properly add to a condition
@@ -74,6 +81,13 @@ class testConditionCreation(unittest.TestCase):
 		'''
 		self.cond.addApplication(AppMock())
 		assert self.cond.existAction('test', '')
+
+	def test_adding_application_inline(self):
+		'''
+			Test adding an application with inline=True to a Condition
+		'''
+		self.cond.addApplication(AppMock(), True)
+		assert self.cond.existAction('test', '', True)
 		
 	def test_adding_existing_action(self):
 		'''
