@@ -23,7 +23,7 @@ class Sleep(ApplicationBase):
 		'''
 			Sleep only needs to return the time to sleep in ms.
 		'''
-		return self.time_in_ms
+		return '%s' % self.time_in_ms
 
 class Set(ApplicationBase):
 	"""Set a variable on the current executing channel"""
