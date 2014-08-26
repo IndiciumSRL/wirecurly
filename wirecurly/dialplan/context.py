@@ -25,19 +25,19 @@ class Context(object):
 
         return {'tag': 'context', 'children': children, 'attrs': {'name': self.name}}
         
-    def addExtension(self, name):
+    def addExtension(self, name, continue_=False):
         '''
             Add a new extension to the context
         '''
-        extension = Extension(name)
+        extension = Extension(name, continue_)
         self.extensions.append(extension)
         return extension
 
-    def addAbsExtension(self, name):
+    def addAbsExtension(self, name, continue_=False):
         '''
             Add a new extension with an absolute condition and return that condition so actions can be added
         '''
-        extension = Extension(name)
+        extension = Extension(name, continue_)
         self.extensions.append(extension)
         c = Condition()
         extension.addCondition(c)

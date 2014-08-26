@@ -8,10 +8,11 @@ __all__ = ['Extension']
 class Extension(object):
 	""" An extension object for the dialplan """
 
-	def __init__(self,extension):
+	def __init__(self,extension, continue_=False):
 		super(Extension, self).__init__()
 		self.extension = extension
 		self.conditions = [] 
+		self.continue_ = continue_
 	
 	def addCondition(self,cond):
 		'''
@@ -67,5 +68,5 @@ class Extension(object):
 
 
 
-		return {'tag': 'extension', 'children': children, 'attrs': {'name': self.extension}}
+		return {'tag': 'extension', 'children': children, 'attrs': {'name': self.extension, 'continue': str(self.continue_)}}
 		
