@@ -80,8 +80,10 @@ class Condition(object):
 
         if self.antiactions:
             children.extend([{'tag': 'anti-action', 'attrs': a} for a in self.antiactions])
+
         if self.cont:
             self.attrs.update({'break': self.cont})
+            
         return {'tag': 'condition', 'children': children, 'attrs': self.attrs }
 
 class or_(object):
