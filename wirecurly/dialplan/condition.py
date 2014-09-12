@@ -23,25 +23,25 @@ class Condition(object):
         self.actions = []
         self.antiactions = []
 
-    def addAction(self,act,val):
+    def addAction(self,act,val,inline=False):
             '''
                 Set a new action for this condition
             '''
             if self.existAction(act,val):   
                 log.warning('Replacing existing action!')
-            self.actions.append({'application' : act , 'data' : val})
+            self.actions.append({'application' : act , 'data' : val, 'inline' : inline})
 
-    def addAntiAction(self,act,val):
+    def addAntiAction(self,act,val,inline=False):
             '''
                 Set a new anti-action for this condition
             '''
             if self.existAntiAction(act,val):
                 log.warning('Replacing existing anti-action!')
 
-            self.antiactions.append({'application' : act , 'data' : val})
+            self.antiactions.append({'application' : act , 'data' : val, 'inline' : inline})
             return
 
-    def addApplication(self, app):
+    def addApplication(self, app,inline=False):
         '''
             Add an application.
             An application must have 2 attributes. app_name and data.
@@ -49,23 +49,23 @@ class Condition(object):
         if not hasattr(app, 'app_name') or not hasattr(app, 'data'):
             raise NoSuchApplication
         else:
-            self.addAction(app.app_name, app.data)
+            self.addAction(app.app_name, app.data, inline)
 
-    def existAction(self,act,val):
+    def existAction(self,act,val,inline=False):
             '''
                 Return true if an action and data exists 
             '''
             for a in self.actions:
-                if a.get('application') == act and a.get('data') == val:
+                if a.get('application') == act and a.get('data') == val and a.get('inline') == inline:
                     return True
             return False
 
-    def existAntiAction(self,act,val):
+    def existAntiAction(self,act,val,inline=False):
             '''
                 Return true if an antiaction and data exists 
             '''
             for a in self.antiactions:
-                if a.get('application') == act and a.get('data') == val:
+                if a.get('application') == act and a.get('data') == val and a.get('inline') == inline:
                     return True
             return False
 
