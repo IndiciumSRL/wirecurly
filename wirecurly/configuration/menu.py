@@ -58,6 +58,12 @@ class Menu(object):
 			if e['digits'] == digits:
 				return e
 		raise ValueError
+
+	def addInclude(self,value):
+        '''
+        	Add include entry for menu
+        '''
+        self.include.append({'tag': 'X-PRE-PROCESS', 'children': [], 'attrs': {'cmd': 'include', 'data': '%s' % (value)}})	
 	
 	def todict(self):
 		'''
