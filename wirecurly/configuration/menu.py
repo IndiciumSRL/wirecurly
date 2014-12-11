@@ -12,6 +12,7 @@ class Menu(object):
 		super(Menu, self).__init__()
 		self.attributes = {'name': name}
 		self.entries = []
+		self.include = []
 		
 
 	def addAttr(self,attr,val):
@@ -60,10 +61,10 @@ class Menu(object):
 		raise ValueError
 
 	def addInclude(self,value):
-        '''
-        	Add include entry for menu
-        '''
-        self.include.append({'tag': 'X-PRE-PROCESS', 'children': [], 'attrs': {'cmd': 'include', 'data': '%s' % (value)}})	
+		'''
+			Add include entry for menu
+		'''
+		self.include.append({'tag': 'X-PRE-PROCESS', 'children': [], 'attrs': {'cmd': 'include', 'data': '%s' % (value)}})	
 	
 	def todict(self):
 		'''
