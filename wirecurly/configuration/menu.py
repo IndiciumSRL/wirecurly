@@ -64,7 +64,7 @@ class Menu(object):
 		'''
 			Add include entry for menu
 		'''
-		self.include.append({'tag': 'X-PRE-PROCESS', 'children': [], 'attrs': {'cmd': 'include', 'data': '%s' % (value)}})	
+		self.include.append({'cmd': 'include', 'data': '%s' % (value)})
 	
 	def todict(self):
 		'''
@@ -75,5 +75,7 @@ class Menu(object):
 
 		if self.entries:
 			children.extend([{'tag': 'entry', 'attrs': a} for a in self.entries])
+		if self.include:
+			children.extend([{'tag': 'X-PRE-PROCESS', 'attrs': i} for i in self.include])
 		
 		return {'tag': 'menu', 'children': children, 'attrs': self.attributes }
