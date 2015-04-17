@@ -9,6 +9,7 @@ class Domain(object):
     def __init__(self, name):
         super(Domain, self).__init__()
         self.domain = name
+        self.group = None
         self.users = []
         self.parameters = None
         self.variables = None
@@ -29,6 +30,11 @@ class Domain(object):
         log.warning('Cannot replace existing variable.')
         raise ValueError
 
+    def addUsersToGroup(self,group='default'):
+        '''
+            Add all users to group
+        '''
+        self.group = group
 
     def addUser(self, user):
         '''Add user to domain
@@ -102,4 +108,10 @@ class Domain(object):
         if self.users:
             children.extend([u.todict() for u in self.users])
 
-        return {'tag': 'domain', 'children': children, 'attrs': {'name': self.domain}}
+        if self.group is not None:
+            users = [{'tag': 'users', 'children': children}]
+            group = [{'tag': 'group', 'children': users, 'attrs': {'name': self.group}}]
+            groups = [{'tag': 'groups', 'children': group}]
+            return {'tag': 'domain', 'children': groups, 'attrs': {'name': self.domain}}
+        else:
+            return {'tag': 'domain', 'children': children, 'attrs': {'name': self.domain}}
