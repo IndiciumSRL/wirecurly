@@ -27,3 +27,25 @@ def test_domain_1_user():
     response = domain.todict()
     assert len(response['children']) == 1
     assert response.get('children')[0] == user.todict()
+
+def test_domain_with_group():
+    domain = Domain('wirephone.com.ar')
+    user = Mock(User)
+    domain.addUser(user)
+    domain.addUsersToGroup()
+    
+    response = domain.todict()
+    
+    assert response.get('children')[0]['tag'] == 'groups'
+    assert response.get('children')[0].get('children')[0]['tag'] == 'group'
+    assert response.get('children')[0].get('children')[0].get('children')[0]['tag'] == 'users'
+
+def test_domain_with_group_name():
+    domain = Domain('wirephone.com.ar')
+    user = Mock(User)
+    domain.addUser(user)
+    domain.addUsersToGroup('group_name')
+    
+    response = domain.todict()
+
+    assert response.get('children')[0].get('children')[0]['attrs']['name'] == 'group_name'
