@@ -66,14 +66,15 @@ class Section(object):
 
     def addVariable(self, variable):
         '''
+            Add an object to Section. This obejct must contain a todict method.
         '''
         self.variables.append(variable)
 
     def todict(self):
         '''
+            Convert Section to a dictionary
         '''
         children = []
-        #children.append(v.todict() for v in self.variables)
         children = [v.todict() for v in self.variables]
         
         return {'tag': self.name, 'children': children}
