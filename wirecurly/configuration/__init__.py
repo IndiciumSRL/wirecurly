@@ -53,3 +53,27 @@ class Configuration(object):
             return {'tag': 'configuration', 'children': children, 'attrs': {'name': self.name, 'description': self.description }}
         else:
             return {'tag': 'configuration', 'children': children, 'attrs': {'name': self.name}}
+
+
+
+class Section(object):
+    """A section of a configuration object"""
+    def __init__(self, name):
+        super(Section, self).__init__()
+        self.name = name
+        self.variables = []
+        
+
+    def addVariable(self, variable):
+        '''
+        '''
+        self.variables.append(variable)
+
+    def todict(self):
+        '''
+        '''
+        children = []
+        #children.append(v.todict() for v in self.variables)
+        children = [v.todict() for v in self.variables]
+        
+        return {'tag': self.name, 'children': children}
