@@ -12,6 +12,7 @@ class Configuration(object):
         self.name = name
         self.description = description
         self.parameters = []
+        self.sections = []
 
     def addParameter(self, param, val):
         '''
@@ -39,6 +40,12 @@ class Configuration(object):
 
         raise ValueError
 
+    def addSection(self,section):
+        '''
+            Add a section object to configuration
+        '''
+        self.sections.append(section)
+
 
     def todict(self):
         '''
@@ -49,6 +56,10 @@ class Configuration(object):
             children.append({'tag': 'params', 'children': [
                             {'tag': 'param', 'attrs': p} for p in self.parameters
                         ]})
+
+        if self.sections:
+            children = children + [s.todict() for s in self.sections]
+
         if self.description:
             return {'tag': 'configuration', 'children': children, 'attrs': {'name': self.name, 'description': self.description }}
         else:

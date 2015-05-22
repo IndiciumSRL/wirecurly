@@ -16,6 +16,63 @@ def test_configuration():
     assert d['attrs']['name'] == 'conftest.xml'
     assert len(d['children'][0]) == 2
 
+def test_add_section_and_params():
+    '''
+        Test adding section and params to configuration
+
+    '''
+    c = Configuration('conftest.xml', 'Configuration testing')
+    c.addParameter('echo-canceller','yes')
+    c.addParameter('out-of-band-dtmfs','yes')
+
+    s = Section('test_section')
+    p1 = Param('echo-canceller','yes')
+    p2 =  Param('out-of-band-dtmfs','no')
+    s.addVariable(p1)
+    s.addVariable(p2)
+
+    c.addSection(s)
+    
+    d = c.todict()
+    
+    assert d['children'][0]['tag'] == 'params'
+    assert d['children'][1]['tag'] == 'test_section'
+    assert len(d['children']) == 2
+
+
+def test_add_params():
+    '''
+        Test adding only params to configuration
+
+    '''
+    c = Configuration('conftest.xml', 'Configuration testing')
+    c.addParameter('echo-canceller','yes')
+    c.addParameter('out-of-band-dtmfs','yes')
+    
+    d = c.todict()
+    
+    assert d['children'][0]['tag'] == 'params'
+    assert len(d['children']) == 1
+
+def test_add_section():
+    '''
+        Test adding section to configuration
+
+    '''
+    c = Configuration('conftest.xml', 'Configuration testing')
+    s = Section('test_section')
+    p1 = Param('echo-canceller','yes')
+    p2 =  Param('out-of-band-dtmfs','no')
+    s.addVariable(p1)
+    s.addVariable(p2)
+
+    c.addSection(s)
+    
+    d = c.todict()
+    
+    assert d['children'][0]['tag'] == 'test_section'
+    assert len(d['children']) == 1
+
 def test_section():
     '''
         Test Section object
