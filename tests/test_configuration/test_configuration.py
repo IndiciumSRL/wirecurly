@@ -73,6 +73,29 @@ def test_add_section():
     assert d['children'][0]['tag'] == 'test_section'
     assert len(d['children']) == 1
 
+def test_add_sub_section():
+    '''
+        Test adding section inside another section
+
+    '''
+    c = Configuration('conftest.xml', 'Configuration testing')
+    global_section = Section('global_section')
+    sub_section = Section('sub_section')
+    p1 = Param('echo-canceller','yes')
+    p2 =  Param('out-of-band-dtmfs','no')
+    sub_section.addVariable(p1)
+    sub_section.addVariable(p2)
+    global_section.addVariable(sub_section)
+
+    c.addSection(global_section)
+    
+    d = c.todict()
+
+    assert d['children'][0]['tag'] == 'global_section'
+    assert d['children'][0]['children'][0]['tag'] == 'sub_section'
+    assert len(d['children']) == 1
+    assert len(d['children'][0]['children']) == 1
+
 def test_section():
     '''
         Test Section object
