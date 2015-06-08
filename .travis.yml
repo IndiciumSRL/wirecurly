@@ -6,4 +6,11 @@ install:
   - "pip install lxml"
   - "pip install pytest"
   - "python setup.py develop"
+  - python setup.py --command-packages=stdeb.command bdist_deb
 script: py.test
+deploy:
+  provider: packagecloud
+  repository: "wirecurly"
+  username: "fedecastro"
+  token: "18e4aa85a6d6b92479a46a47de5fcf852c2a5b9e33f086ce"
+  dist: "debian/wheezy"
