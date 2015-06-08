@@ -1,3 +1,4 @@
+PACKAGECLOUD_TOKEN: 18e4aa85a6d6b92479a46a47de5fcf852c2a5b9e33f086ce
 language: python
 python:
   #- "2.6"
@@ -5,6 +6,7 @@ python:
 before_install:
   - "sudo apt-get update -qq"
   - "sudo apt-get install -y python-setuptools python-all debhelper"
+  - "gem install package_cloud"
 install:
   - "pip install lxml"
   - "pip install pytest"
@@ -12,9 +14,4 @@ install:
   - "python setup.py develop"
   - python setup.py --command-packages=stdeb.command bdist_deb
 script: py.test
-deploy:
-  provider: packagecloud
-  repository: "wirecurly"
-  username: "fedecastro"
-  token: "18e4aa85a6d6b92479a46a47de5fcf852c2a5b9e33f086ce"
-  dist: "debian/wheezy"
+  - package_cloud push fedecastro/wirecurly/debian/wheezy deb_dist/python-wirecurly_0.1-1_all.deb
