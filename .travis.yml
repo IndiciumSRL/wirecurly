@@ -1,12 +1,12 @@
-PACKAGECLOUD_TOKEN: 18e4aa85a6d6b92479a46a47de5fcf852c2a5b9e33f086ce
 language: python
 python:
   #- "2.6"
   - "2.7_with_system_site_packages"
 before_install:
   - "sudo apt-get update -qq"
-  - "sudo apt-get install -y python-setuptools python-all debhelper"
+  - "sudo apt-get install -y python-setuptools python-all debhelper ruby-full"
   - "gem install package_cloud"
+  - "sudo export PACKAGECLOUD_TOKEN=18e4aa85a6d6b92479a46a47de5fcf852c2a5b9e33f086ce"
 install:
   - "pip install lxml"
   - "pip install pytest"
