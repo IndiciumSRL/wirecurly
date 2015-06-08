@@ -5,6 +5,7 @@ python:
 install:
   - "pip install lxml"
   - "pip install pytest"
+  - "pip install stdeb"
   - "python setup.py develop"
   - python setup.py --command-packages=stdeb.command bdist_deb
 script: py.test
