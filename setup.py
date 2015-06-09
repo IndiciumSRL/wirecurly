@@ -7,7 +7,7 @@ except ImportError:
 
 setup(
     name='wirecurly',
-    version='0.2',
+    version='0.1',
     description='A simple XML generation tool to handle FreeSWITCH mod_xml_curl as well as file written XML',
     author='Joao Mesquita',
     author_email='jmesquita@indicium.com.ar',
