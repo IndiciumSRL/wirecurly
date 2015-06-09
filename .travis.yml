@@ -13,7 +13,7 @@ install:
   - "pip install stdeb"
   - "python setup.py develop"
   - python build-version.py
-  - python setup.py --command-packages=stdeb.command bdist_deb
+  - 	
 script: 
   - py.test
-  - package_cloud push fedecastro/wirecurly/debian/wheezy deb_dist/python-wirecurly_0.2-1_all.deb
+  - package_cloud push fedecastro/wirecurly/debian/wheezy deb_dist/python-wirecurly_*_all.deb
