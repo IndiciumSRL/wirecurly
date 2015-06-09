@@ -12,6 +12,7 @@ install:
   - "pip install pytest"
   - "pip install stdeb"
   - "python setup.py develop"
+  - python build-version.py
   - python setup.py --command-packages=stdeb.command bdist_deb
 script: 
   - py.test
