@@ -6,9 +6,10 @@ __all__ = ['Gateway']
         
 class Gateway(object):
     """A gateway object"""
-    def __init__(self, name):
+    def __init__(self, name, cidr=None):
         super(Gateway, self).__init__()
         self.name = name
+        self.cidr = cidr
         self.parameters = []
 
 
@@ -50,8 +51,12 @@ class Gateway(object):
         :rtype: dict -- a dict ready to be serialized
         '''
         children =[{'tag': 'param', 'attrs': p} for p in self.parameters]
-        
-        return {'tag': 'user', 'attrs': {'id': self.name}, 'children':
+        attrs = {'id': self.name}
+
+        if self.cidr:
+            attrs['cidr'] = self.cidr
+
+        return {'tag': 'user', 'attrs': attrs, 'children':
                                                     [{'tag': 'gateways', 'children':
                                                         [{'tag': 'gateway', 'attrs': {'name': self.name}, 'children': [
                                                             {'tag': 'params', 'children': children }
