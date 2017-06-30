@@ -2,9 +2,9 @@ import logging
 
 log = logging.getLogger(__name__)
 
-__all__ = ['elementList']
+__all__ = ['ElementList']
 
-class elementList(object):
+class ElementList(object):
     '''
 		element object to use inside generic lists.
 
@@ -13,7 +13,7 @@ class elementList(object):
     '''
 
     def __init__(self, attributes):
-        super(elementList, self).__init__()
+        super(ElementList, self).__init__()
         self.element_name = attributes.get('element_name')
         attributes.pop('element_name')
         self.attrs = attributes

@@ -3,8 +3,8 @@
 '''
 
 import unittest
-from wirecurly.configuration.genericList import GenericList
-from wirecurly.configuration.elementList import elementList
+from wirecurly.configuration.genericlist import GenericList
+from wirecurly.configuration.elementlist import ElementList
 
 
 class testGenericListCreation(unittest.TestCase):
@@ -29,7 +29,7 @@ class testGenericListCreation(unittest.TestCase):
         '''
             Test if an element is properly add to a list
         '''
-        e = elementList({'element_name': 'name', 'type': 'some_type'})
+        e = ElementList({'element_name': 'name', 'type': 'some_type'})
         self.list.addElement(e)
         el = self.list.getElements()
         assert el[0].todict() == {'tag': 'name', 'attrs': {'type': 'some_type'}}
