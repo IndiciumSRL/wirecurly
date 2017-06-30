@@ -16,7 +16,7 @@ class testGenericListCreation(unittest.TestCase):
         '''
         list fixtures for tests
         '''
-        self.list = GenericList({'list_name': 'test', 'first_attribute': 'test_attr'})
+        self.list = GenericList('test', {'first_attribute': 'test_attr'})
 
     def test_list_dict_ok(self):
         '''
@@ -29,7 +29,7 @@ class testGenericListCreation(unittest.TestCase):
         '''
             Test if an element is properly add to a list
         '''
-        e = ElementList({'element_name': 'name', 'type': 'some_type'})
+        e = ElementList('name', {'type': 'some_type'})
         self.list.addElement(e)
         el = self.list.getElements()
         assert el[0].todict() == {'tag': 'name', 'attrs': {'type': 'some_type'}}

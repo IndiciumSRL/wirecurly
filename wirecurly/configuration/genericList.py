@@ -7,15 +7,15 @@ __all__ = ['GenericList']
 class GenericList(object):
 	'''
 		Generic list object
-		Receives a dictionary with its attributes
-		Dictionary must contain a key called 'list_name' to be used as name of the list
-		ex: {'list_name': 'agents', 'name': 'example'} will be parsed as <agents name='example'>
 	'''
 
-	def __init__(self, attributes):
+	def __init__(self, name, attributes):
+		'''
+		name: Name of list element
+		attributes: Dictionary containing attributes
+	    '''
 		super(GenericList, self).__init__()
-		self.list_name = attributes.get('list_name')
-		attributes.pop('list_name')
+		self.name = name
 		self.attrs = attributes
 		self.elements = []
 
@@ -43,4 +43,4 @@ class GenericList(object):
 
 		if self.elements:
 			children.extend([n.todict() for n in self.elements])
-		return {'tag': self.list_name, 'children': children, 'attrs': self.attrs }
+		return {'tag': self.name, 'children': children, 'attrs': self.attrs }
