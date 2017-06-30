@@ -3,7 +3,7 @@
 '''
 
 import unittest
-from wirecurly.configuration import elementlist
+from wirecurly.configuration import genericelement
 
 
 class testElementCreation(unittest.TestCase):
@@ -16,7 +16,7 @@ class testElementCreation(unittest.TestCase):
 			element fixtures for tests
         '''
 
-        self.element = elementlist.ElementList('name', {'type': 'some_type'})
+        self.element = genericelement.GenericElement('name', {'type': 'some_type'})
 
     def test_element_dict_ok(self):
         '''
