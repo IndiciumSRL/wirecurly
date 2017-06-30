@@ -9,7 +9,7 @@ class GenericList(object):
 		Generic list object
 	'''
 
-	def __init__(self, name, attributes):
+	def __init__(self, name, attributes={}):
 		'''
 		name: Name of list element
 		attributes: Dictionary containing attributes
