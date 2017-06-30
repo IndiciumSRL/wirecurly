@@ -23,7 +23,7 @@ class testGenericListCreation(unittest.TestCase):
             Test that list is properly serialized
         '''
         assert isinstance(self.list.todict(), dict)
-        assert self.list.todict() == {'tag': 'test', 'attrs': {'first_attribute': 'test_attr'}}
+        assert self.list.todict() == {'tag': 'test', 'attrs': {'first_attribute': 'test_attr'}, 'children': []}
 
     def test_adding_element(self):
         '''

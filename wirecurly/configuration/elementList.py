@@ -19,8 +19,8 @@ class elementList(object):
         self.attrs = attributes
 
 
-	def todict(self):
-		'''
-			Create a dict so it can be converted/serialized
-		'''
-		return {'tag': self.element_name, 'attrs': self.attrs }
+    def todict(self):
+        '''
+            Create a dict so it can be converted/serialized
+        '''
+        return {'tag': self.element_name, 'attrs': self.attrs }

@@ -23,4 +23,4 @@ class testElementCreation(unittest.TestCase):
 			Test that element is properly serialized
         '''
         assert isinstance(self.element.todict(), dict)
-        assert self.element.todict() == {'tag': 'element_name', 'attrs': {'type': 'some_type'}}
+        assert self.element.todict() == {'tag': 'name', 'attrs': {'type': 'some_type'}}

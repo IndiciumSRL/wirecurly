@@ -25,7 +25,7 @@ class GenericList(object):
 			Add Element to list
 		'''
 
-		self.nodes.append(element)
+		self.elements.append(element)
 		return
 
 	def getElements(self):
