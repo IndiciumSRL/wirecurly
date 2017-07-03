@@ -9,7 +9,7 @@ class GenericElement(object):
 		Generic element object
     '''
 
-    def __init__(self, name, attributes={}):
+    def __init__(self, name, attributes={}, elements=[]):
         '''
         name: element name
         attributes: Dictionary containing attributes
@@ -17,6 +17,7 @@ class GenericElement(object):
         super(GenericElement, self).__init__()
         self.name = name
         self.attrs = attributes
+        self.elements = elements
 
     def addAttr(self, attr, val):
 		'''
@@ -30,9 +31,20 @@ class GenericElement(object):
 		log.warning('Cannot modify existing attribute')
 		raise ValueError
 
+    def addElement(self, element):
+        '''
+            Add a subelement to GenericElement. This object must contain a todict method.
+        '''
+        self.elements.append(element)
+
 
     def todict(self):
         '''
             Create a dict so it can be converted/serialized
         '''
-        return {'tag': self.name, 'attrs': self.attrs }
+
+        if self.elements:
+            children = [v.todict() for v in self.elements]
+            return {'tag': self.name, 'attrs': self.attrs, 'children': children}
+        else:
+            return {'tag': self.name, 'attrs': self.attrs}
