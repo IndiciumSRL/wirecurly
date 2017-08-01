@@ -19,6 +19,6 @@ script:
   - package_cloud push fedecastro/wirecurly/debian/wheezy deb_dist/python-wirecurly_*_all.deb
 
 # safelist
-branches:
-  only:
-  - master
+#branches:
+#  only:
+#  - master
