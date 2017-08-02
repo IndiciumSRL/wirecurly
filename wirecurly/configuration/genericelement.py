@@ -9,7 +9,7 @@ class GenericElement(object):
 		Generic element object
     '''
 
-    def __init__(self, name, attributes={}, elements=[]):
+    def __init__(self, name, attributes={}):
         '''
         name: element name
         attributes: Dictionary containing attributes
@@ -17,7 +17,7 @@ class GenericElement(object):
         super(GenericElement, self).__init__()
         self.name = name
         self.attrs = attributes
-        self.elements = elements
+        self.elements = []
 
     def addAttr(self, attr, val):
 		'''
