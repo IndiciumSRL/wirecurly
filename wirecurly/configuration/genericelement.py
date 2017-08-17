@@ -20,16 +20,21 @@ class GenericElement(object):
         self.elements = []
 
     def addAttr(self, attr, val):
-		'''
-			Add an attribute to element
-		'''
-		try:
-			self.getAttr(attr)
-		except ValueError:
-			self.attributes[attr] = val
-			return
-		log.warning('Cannot modify existing attribute')
-		raise ValueError
+        '''
+            Add an attribute to element
+        '''
+        if not self.getAttr(attr):
+            self.attrs[attr] = val
+            return
+        else:
+            log.warning('Cannot modify existing attribute')
+            raise ValueError
+
+    def getAttr(self, attr):
+        '''
+            Return Attribute value
+        '''
+        return self.attrs.get(attr, None)
 
     def addElement(self, element):
         '''
